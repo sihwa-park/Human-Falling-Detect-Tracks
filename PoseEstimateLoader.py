@@ -13,7 +13,7 @@ class SPPE_FastPose(object):
                  backbone,
                  input_height=320,
                  input_width=256,
-                 device='cuda'):
+                 device='cuda', weight_file='./Models/sppe/fast_res50_256x192.pth'):
         assert backbone in ['resnet50', 'resnet101'], '{} backbone is not support yet!'.format(backbone)
 
         self.inp_h = input_height
@@ -23,7 +23,7 @@ class SPPE_FastPose(object):
         if backbone == 'resnet101':
             self.model = InferenNet_fast().to(device)
         else:
-            self.model = InferenNet_fastRes50().to(device)
+            self.model = InferenNet_fastRes50(weights_file=weight_file).to(device)
         self.model.eval()
 
     def predict(self, image, bboxs, bboxs_scores):
